@@ -1,0 +1,88 @@
+{
+    "name": "Resnet18",
+    "n_gpu": 0,
+    "use_synch_bn": false,
+
+    "arch": {
+        "type": "Resnet18",
+        "args": {
+            "in_channels": 1,
+            "pretrained": false,
+            "freeze_bn": false
+        }
+    },
+
+    "train_loader": {
+        "type": "MedMnist",
+        "args":{
+            "data_dir": "data/MedMnist/val",
+
+            "base_size": 256,
+            "crop_size": 224,
+            "augment": true,
+            "scale": true,
+            "flip": false,
+            "rotate": false,
+            "blur": false,
+            "histogram": false,
+
+            "num_workers": 8,
+            "batch_size": 4,
+            "shuffle": true,
+
+            "in_channels": 1
+        }
+    },
+
+    "val_loader": {
+        "type": "MedMnist",
+        "args":{
+            "data_dir": "data/MedMnist/val",
+
+            "crop_size": 224,
+            "histogram": false,
+
+            "batch_size": 4,
+            "num_workers": 4,
+            "in_channels": 1,
+
+            "val": true
+        }
+    },
+
+    "loss": "CrossEntropyLoss2d",
+    "ignore_index": 255,
+
+    "optimizer": {
+        "type": "SGD",
+        "differential_lr": false,
+        "args":{
+            "lr": 0.01,
+            "weight_decay": 1e-4,
+            "momentum": 0.9
+        }
+    },
+    "lr_scheduler": {
+        "type": "StepLR_",
+        "args": {
+            "step_size": 1,
+            "gamma": 0.5
+        }
+    },
+
+    "trainer": {
+        "epochs": 1,
+        "save_dir": "saved/",
+        "save_period": 1,
+  
+        "monitor": "max top1",
+        "early_stop": 10,
+        
+        "tensorboard": true,
+        "log_dir": "saved/runs",
+        "log_per_iter": 20,
+
+        "val": true,
+        "val_per_epochs": 1
+    }
+}

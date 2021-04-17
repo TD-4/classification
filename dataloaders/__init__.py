@@ -1,0 +1,1 @@
+from .MedMnist import MedMnist
