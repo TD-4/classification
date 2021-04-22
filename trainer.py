@@ -168,5 +168,5 @@ class Trainer(BaseTrainer):
         self.confusion_matrix = [[0 for j in range(self.train_loader.dataset.num_classes)] for i in range(self.train_loader.dataset.num_classes)]
 
     def _update_metrics(self, tops):
-        self.precision_top1.update(tops[0])
-        self.precision_top2.update(tops[1])
+        self.precision_top1.update(tops[0].item())
+        self.precision_top2.update(tops[1].item())
