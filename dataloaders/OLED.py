@@ -54,7 +54,6 @@ class OLEDDataset(BaseDataSet):
         :return:
         """
         image_path, label = self.files[index]
-        print(image_path)
         if self.in_channels == 1:
             # 修改支持中文路径
             img = cv2.imdecode(np.fromfile(image_path, dtype=np.uint8), cv2.IMREAD_GRAYSCALE)
