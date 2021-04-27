@@ -19,6 +19,11 @@ from trainer import Trainer
 import warnings
 warnings.filterwarnings("ignore")
 
+# 绘制数据时用到
+import matplotlib.pyplot as plt
+from torchvision import transforms
+from utils import transforms as local_transforms
+
 
 def get_instance(module, name, config, *args):
     # GET THE CORRESPONDING CLASS / FCT
@@ -31,35 +36,36 @@ def main(config, resume):
     # DATA LOADERS
     train_loader = get_instance(dataloaders, 'train_loader', config)
     # # Test train_loader
-    # import cv2
-    # import numpy as np
     # for data, target in train_loader:
     #     # 使用matplotlib测试
-    #     import matplotlib.pyplot as plt
-    #     plt.imshow(data.numpy()[0].transpose((1, 2, 0)), cmap='Greys_r')
+    #     MEAN = [0.45734706]
+    #     STD = [0.23965294]
+    #     restore_transform = transforms.Compose([local_transforms.DeNormalize(MEAN, STD), transforms.ToPILImage()])
+    #     image = restore_transform(data[0])
+    #     plt.imshow(image, cmap="gray")
+    #     plt.text(226, 1, str(target.numpy()[0]))
     #     plt.show()
-    #
-    #     # 使用cv2测试
-    #     # cv2.imshow("image", data.numpy()[0].transpose((1, 2, 0)))
-    #     # cv2.waitKey()
+    #     # print(target.numpy()[0])   # , cmap="gray"
+    #     # print("Finshed")
+
     val_loader = get_instance(dataloaders, 'val_loader', config)
     # # Test val_loader
-    # import cv2
-    # import numpy as np
     # for data, target in val_loader:
     #     # 使用matplotlib测试
-    #     import matplotlib.pyplot as plt
-    #     plt.imshow(data.numpy()[0].transpose((1, 2, 0)), cmap='Greys_r')
+    #     MEAN = [0.45734706]
+    #     STD = [0.23965294]
+    #     restore_transform = transforms.Compose([local_transforms.DeNormalize(MEAN, STD), transforms.ToPILImage()])
+    #     image = restore_transform(data[0])
+    #     plt.imshow(image, cmap="gray")
+    #     plt.text(226, 1, str(target.numpy()[0]))
     #     plt.show()
-    #
-    #     # 使用cv2测试
-    #     # cv2.imshow("image", data.numpy()[0].transpose((1, 2, 0)))
-    #     # cv2.waitKey()
+    #     # print(target.numpy()[0])   # , cmap="gray"
+    #     # print("Finshed")
 
     # MODEL
     model = get_instance(models, 'arch', config, train_loader.dataset.num_classes)
     # print(f'\n{model}\n')
-    # summary(model, (1, 224, 224))
+    # summary(model, (1, 224, 224), device="cpu")
 
     # LOSS
     loss = getattr(losses, config['loss'])(ignore_index=config['ignore_index'])
@@ -89,7 +95,7 @@ if __name__ == '__main__':
 
     config = json.load(open(args.configs))
     if args.resume:
-        print("resume ......")
+        print("resume config......")
         config = torch.load(args.resume)['configs']
     if args.device:
         os.environ["CUDA_VISIBLE_DEVICES"] = args.device
