@@ -21,3 +21,39 @@ class Resnet18(torch.nn.Module):
 
     def forward(self, x):
         return self.model(x)
+
+
+class Resnet34(torch.nn.Module):
+    def __init__(self, num_class=1000, in_channels=3, pretrained=False, freeze_bn=False):
+        super(Resnet34, self).__init__()
+        self.model = resnet34(pretrained=pretrained)
+        self.model.conv1 = torch.nn.Conv2d(in_channels=in_channels,out_channels=64, kernel_size=7,
+                                      stride=2, padding=3,bias=False)
+        self.model.fc = torch.nn.Linear(512, num_class)
+
+    def forward(self, x):
+        return self.model(x)
+
+
+class Resnet50(torch.nn.Module):
+    def __init__(self, num_class=1000, in_channels=3, pretrained=False, freeze_bn=False):
+        super(Resnet50, self).__init__()
+        self.model = resnet50(pretrained=pretrained)
+        self.model.conv1 = torch.nn.Conv2d(in_channels=in_channels,out_channels=64, kernel_size=7,
+                                      stride=2, padding=3,bias=False)
+        self.model.fc = torch.nn.Linear(2048, num_class)
+
+    def forward(self, x):
+        return self.model(x)
+
+
+class Resnet101(torch.nn.Module):
+    def __init__(self, num_class=1000, in_channels=3, pretrained=False, freeze_bn=False):
+        super(Resnet101, self).__init__()
+        self.model = resnet101(pretrained=pretrained)
+        self.model.conv1 = torch.nn.Conv2d(in_channels=in_channels,out_channels=64, kernel_size=7,
+                                      stride=2, padding=3,bias=False)
+        self.model.fc = torch.nn.Linear(2048, num_class)
+
+    def forward(self, x):
+        return self.model(x)
