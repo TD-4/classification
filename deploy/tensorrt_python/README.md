@@ -17,7 +17,7 @@
 ### ONNX to Engine， Engine to Runtime
 `python onnx2trt.py -c 配置文件的路径 --onnx onnx文件的路径 --model pth文件的路径 --engine trt engine文件路径 --images 输入图片的路径`
 
-### 结构
+### 结果
 ```
 ssh://root@gpu.aiserver.cn:46068/usr/bin/python3 -u /root/cds/classification/deploy/tensorrt_python/onnx2trt.py
 Namespace(configs='../../saved/OLED-Resnet18/04-28_09-02/configs.json', engine='oled_resnet.engine', images='oled_one', model='../../saved/OLED-Resnet18/04-28_09-02/best_model.pth', onnx='oled_resnet18.onnx')
