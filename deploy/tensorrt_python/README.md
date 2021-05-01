@@ -29,16 +29,18 @@ Building an engine from file oled_resnet18.onnx; this may take a while...
 Completed creating Engine
 [TensorRT] WARNING: Current optimization profile is: 0. Please ensure there are no enqueued operations pending in this context prior to switching profiles
   0%|                                                                         | 0/1 [00:00<?, ?it/s][TensorRT] WARNING: Explicit batch network detected and batch size specified, use enqueue without batch size instead.
-100%|████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 438.55it/s]
-Inference time with the TensorRT model: 0.003827810287475586
+100%|████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 422.17it/s]
+Inference time with the TensorRT model: 0.003984212875366211
 Inference result: [array([ 7.493896  , -2.347594  , -0.6206987 , -1.6629304 , -2.1027129 ,
         2.9506874 ,  1.4629362 , -0.50333786, -2.9737246 , -1.3985405 ,
        -3.4913301 ], dtype=float32)]
 running on device cuda:0
 Loading base network...
 loaded weight
-100%|████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 193.15it/s]
-Inference time with the PyTorch model: 0.005491018295288086
-Inference result: [array(0)]
-MSE Error = 9.393638610839844
+100%|████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 194.69it/s]
+Inference time with the PyTorch model: 0.005443096160888672
+Inference result: [array([ 7.4938903 , -2.3476057 , -0.62071526, -1.6629262 , -2.1027286 ,
+        2.950688  ,  1.4629477 , -0.5033226 , -2.9737294 , -1.3985391 ,
+       -3.491307  ], dtype=float32)]
+MSE Error = 1.4865458863866365e-10
 ```
