@@ -58,7 +58,7 @@ def main(config, resume):
     #     image = restore_transform(data[0])
     #     plt.imshow(image, cmap="gray")
     #     plt.text(226, 1, str(target.numpy()[0]))
-    #     plt.show()
+    #     # plt.show()
     #     # print(target.numpy()[0])   # , cmap="gray"
     #     # print("Finshed")
 
@@ -86,7 +86,7 @@ def main(config, resume):
 if __name__ == '__main__':
     # PARSE THE ARGS
     parser = argparse.ArgumentParser(description='PyTorch Training')
-    parser.add_argument('-c', '--configs', default='configs/MNIST_ResNet18_MSE_SGD.json', type=str,
+    parser.add_argument('-c', '--configs', default='configs/BDD_ResNet18_CEL_SGD.json', type=str,
                         help='Path to the configs file (default: configs.json)')
     parser.add_argument('-r', '--resume', default=None, type=str,
                         help='Path to the .pth model checkpoint to resume training')
