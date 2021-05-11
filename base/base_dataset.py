@@ -84,7 +84,7 @@ class BaseDataSet(Dataset):
             flat_gray = image.reshape((cols * rows,)).tolist()
             A = min(flat_gray)
             B = max(flat_gray)
-            image = np.uint8(255 / (B - A) * (image - A) + 0.5)
+            image = np.uint8(255 / (B - A + 0.1) * (image - A) + 0.5)
 
         return image, label
 
@@ -156,7 +156,7 @@ class BaseDataSet(Dataset):
             flat_gray = image.reshape((cols * rows,)).tolist()
             A = min(flat_gray)
             B = max(flat_gray)
-            image = np.uint8(255 / (B-A) * (image - A) + 0.5)
+            image = np.uint8(255 / (B-A+0.1) * (image - A) + 0.5)
 
         return image, label
         
