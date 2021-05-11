@@ -20,5 +20,5 @@ def files_and_dirs_list(dir_path):
 if __name__ == "__main__":
     # 获取当前文件的目录
     cur_path = os.path.abspath(os.path.dirname(__file__))
-    root_path = os.path.join(cur_path, "../")
+    root_path = os.path.join("/home/felixfu/data/segmentation/")
     files_and_dirs_list(root_path)
