@@ -3,6 +3,7 @@
 # @Date: 2021.4.14
 # @github:https://github.com/felixfu520
 
+import os
 import time
 import numpy as np
 from tqdm import tqdm
@@ -62,6 +63,7 @@ class Trainer(BaseTrainer):
             # self.lr_scheduler.step(epoch=epoch - 1)
             if self.device == torch.device('cuda:0'):
                 data, target = data.to(self.device), target.to(self.device)
+                self.loss.to(self.device)
 
             # LOSS & OPTIMIZE
             self.optimizer.zero_grad()
@@ -97,10 +99,10 @@ class Trainer(BaseTrainer):
                                                 self.batch_time.average, self.data_time.average))
 
         # METRICS TO TENSORBOARD
-        self.writer.add_scalar(f'{self.wrt_mode}/top1', self.precision_top1.average.item(), self.wrt_step)
-        self.writer.add_scalar(f'{self.wrt_mode}/top2', self.precision_top2.average.item(), self.wrt_step)
+        self.writer.add_scalar(f'{self.wrt_mode}/top1', self.precision_top1.average.item(), self.wrt_step)  # self.wrt_step
+        self.writer.add_scalar(f'{self.wrt_mode}/top2', self.precision_top2.average.item(), self.wrt_step)  # self.wrt_step
         for i, opt_group in enumerate(self.optimizer.param_groups):
-            self.writer.add_scalar(f'{self.wrt_mode}/Learning_rate_{i}', opt_group['lr'], self.wrt_step)
+            self.writer.add_scalar(f'{self.wrt_mode}/Learning_rate_{i}', opt_group['lr'], self.wrt_step)  # self.wrt_step
 
         # RETURN LOSS & METRICS
         log = {'losses': self.total_loss.average,
@@ -144,19 +146,43 @@ class Trainer(BaseTrainer):
 
             # METRICS TO TENSORBOARD
             self.wrt_step = (epoch) * len(self.val_loader)
-            self.writer.add_scalar(f'{self.wrt_mode}/losses', self.total_loss.average, self.wrt_step)
-            self.writer.add_scalar(f'{self.wrt_mode}/top1', self.precision_top1.average.item(), self.wrt_step)
-            self.writer.add_scalar(f'{self.wrt_mode}/top2', self.precision_top2.average.item(), self.wrt_step)
+            self.writer.add_scalar(f'{self.wrt_mode}/losses', self.total_loss.average, self.wrt_step)   # self.wrt_step
+            self.writer.add_scalar(f'{self.wrt_mode}/top1', self.precision_top1.average.item(), self.wrt_step)  # self.wrt_step
+            self.writer.add_scalar(f'{self.wrt_mode}/top2', self.precision_top2.average.item(), self.wrt_step)  # self.wrt_step
 
             # RETURN LOSS & METRICS
             log = {'losses': self.total_loss.average,
                    "top1": self.precision_top1.average.item(),
                    "top2": self.precision_top2.average.item()}
+
             # print confusion matrix
+            confusion_file = open(os.path.join(self.checkpoint_dir, "confusion.txt"), 'w')
+            label_path = os.path.join(self.config["train_loader"]["args"]["data_dir"], "labels.txt")
+            labels = []
+            with open(label_path, 'r') as f:
+                for line in f:
+                    labels.append(line.split()[0])
+
+            print("{0:8}".format(""), end="")
+            confusion_file.write("{0:8}".format(""))
+            for name in labels:
+                print("{0:8}".format(name), end="")
+                confusion_file.write("{0:8}".format(name))
+            print("{0:8}".format("Precision"))
+            confusion_file.write("{0:8}\n".format("Precision"))
             for i in range(self.train_loader.dataset.num_classes):
+                print("{0:8}".format(labels[i]), end="")
+                confusion_file.write("{0:8}".format(labels[i]))
                 for j in range(self.train_loader.dataset.num_classes):
-                    print(str(self.confusion_matrix[i][j]) + "\t", end=" ")
-                print("\n")
+                    if i==j:
+                        print("{0:8}".format(str("-"+str(self.confusion_matrix[i][j]))+"-"), end="")
+                        confusion_file.write("{0:8}".format(str("-"+str(self.confusion_matrix[i][j]))+"-"))
+                    else:
+                        print("{0:8}".format(str(self.confusion_matrix[i][j])), end="")
+                        confusion_file.write("{0:8}".format(str(self.confusion_matrix[i][j])))
+                precision = 0.0 + self.confusion_matrix[i][i] / sum(self.confusion_matrix[i])
+                print("{0:.4f}".format(precision))
+                confusion_file.write("{0:8}\n".format(precision))
 
         return log
 

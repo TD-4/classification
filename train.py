@@ -6,6 +6,7 @@
 import os
 import json
 import argparse
+import numpy as np
 
 import torch
 from torchsummary import summary
@@ -68,7 +69,8 @@ def main(config, resume):
     summary(model, (1, 224, 224), device="cpu")
 
     # LOSS
-    loss = getattr(losses, config['loss'])(ignore_index=config['ignore_index'])
+    weight = torch.from_numpy(np.array(config['weight'])).float()
+    loss = getattr(losses, config['loss'])(ignore_index=config['ignore_index'], weight=weight)
 
     # TRAINING
     trainer = Trainer(
@@ -86,7 +88,7 @@ def main(config, resume):
 if __name__ == '__main__':
     # PARSE THE ARGS
     parser = argparse.ArgumentParser(description='PyTorch Training')
-    parser.add_argument('-c', '--configs', default='configs/BDD_Densenet161_CEL_SGD.json', type=str,
+    parser.add_argument('-c', '--configs', default='configs/BDD_Densenet121_CEL_SGD_lr.json', type=str,
                         help='Path to the configs file (default: configs.json)')
     parser.add_argument('-r', '--resume', default=None, type=str,
                         help='Path to the .pth model checkpoint to resume training')
