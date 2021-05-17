@@ -71,6 +71,7 @@ def main(config, resume):
     # LOSS
     weight = torch.from_numpy(np.array(config['weight'])).float()
     loss = getattr(losses, config['loss'])(ignore_index=config['ignore_index'], weight=weight)
+    # loss = getattr(losses, config['loss'])(ignore_index=config['ignore_index'])
 
     # TRAINING
     trainer = Trainer(
@@ -88,10 +89,10 @@ def main(config, resume):
 if __name__ == '__main__':
     # PARSE THE ARGS
     parser = argparse.ArgumentParser(description='PyTorch Training')
-    parser.add_argument('-c', '--configs', default='configs/BDD_Densenet121_CEL_SGD_lr.json', type=str,
-                        help='Path to the configs file (default: configs.json)')
+    parser.add_argument('-c', '--configs', default='configs/BDD_Densenet161_CEL_SGD_assist.json', type=str,
+                        help='Path to the configs file (default: configs.json)')  # saved/BDD-Densenet161/05-13_09-14/configs.json
     parser.add_argument('-r', '--resume', default=None, type=str,
-                        help='Path to the .pth model checkpoint to resume training')
+                        help='Path to the .pth model checkpoint to resume training') # "saved/BDD-Densenet161/05-13_09-14/best_model.pth"
     parser.add_argument('-d', '--device', default=None, type=str, help='indices of GPUs to enable (default: all)')
     args = parser.parse_args()
 
@@ -99,6 +100,8 @@ if __name__ == '__main__':
     if args.resume:
         print("resume config......")
         config = torch.load(args.resume)['configs']
+        config["train_loader"]["args"]["batch_size"] = 20
+        config["val_loader"]["args"]["batch_size"] = 20
     if args.device:
         os.environ["CUDA_VISIBLE_DEVICES"] = args.device
     
