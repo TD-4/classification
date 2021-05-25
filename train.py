@@ -39,8 +39,8 @@ def main(config, resume):
     # # Test train_loader
     # for data, target in train_loader:
     #     # 使用matplotlib测试
-    #     MEAN = [0.45734706]
-    #     STD = [0.23965294]
+    #     MEAN = [0.39755441968379984]
+    #     STD = [0.09066523780114362]
     #     restore_transform = transforms.Compose([local_transforms.DeNormalize(MEAN, STD), transforms.ToPILImage()])
     #     image = restore_transform(data[0])
     #     plt.imshow(image, cmap="gray")
@@ -53,8 +53,8 @@ def main(config, resume):
     # # Test val_loader
     # for data, target in val_loader:
     #     # 使用matplotlib测试
-    #     MEAN = [0.45734706]
-    #     STD = [0.23965294]
+    #     MEAN = [0.39755441968379984]
+    #     STD = [0.09066523780114362]
     #     restore_transform = transforms.Compose([local_transforms.DeNormalize(MEAN, STD), transforms.ToPILImage()])
     #     image = restore_transform(data[0])
     #     plt.imshow(image, cmap="gray")
@@ -66,7 +66,7 @@ def main(config, resume):
     # MODEL
     model = get_instance(models, 'arch', config, train_loader.dataset.num_classes)
     print(f'\n{model}\n')
-    summary(model, (1, 224, 224), device="cpu")
+    summary(model, (1, 150, 150), device="cpu")
 
     # LOSS
     weight = torch.from_numpy(np.array(config['weight'])).float()
@@ -89,19 +89,20 @@ def main(config, resume):
 if __name__ == '__main__':
     # PARSE THE ARGS
     parser = argparse.ArgumentParser(description='PyTorch Training')
-    parser.add_argument('-c', '--configs', default='configs/BDD_Densenet161_CEL_SGD_assist.json', type=str,
-                        help='Path to the configs file (default: configs.json)')  # saved/BDD-Densenet161/05-13_09-14/configs.json
-    parser.add_argument('-r', '--resume', default=None, type=str,
-                        help='Path to the .pth model checkpoint to resume training') # "saved/BDD-Densenet161/05-13_09-14/best_model.pth"
+    parser.add_argument('-c', '--configs', default='configs/MDD_AlexNetx_CEL_SGD.json', type=str,
+                        help='Path to the configs file (default: configs.json)')
+    parser.add_argument('-r', '--resume', default="", type=str,
+                        help='Path to the .pth model checkpoint to resume training')
     parser.add_argument('-d', '--device', default=None, type=str, help='indices of GPUs to enable (default: all)')
     args = parser.parse_args()
 
     config = json.load(open(args.configs))
     if args.resume:
         print("resume config......")
-        config = torch.load(args.resume)['configs']
-        config["train_loader"]["args"]["batch_size"] = 20
-        config["val_loader"]["args"]["batch_size"] = 20
+        if True:  # 使用pth中的config
+            config = torch.load(args.resume)['configs']
+            # config["train_loader"]["args"]["batch_size"] = 20
+            # config["val_loader"]["args"]["batch_size"] = 20
     if args.device:
         os.environ["CUDA_VISIBLE_DEVICES"] = args.device
     
