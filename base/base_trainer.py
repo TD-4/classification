@@ -68,6 +68,11 @@ class BaseTrainer:
         self.lr_scheduler = getattr(utils.lr_scheduler, config['lr_scheduler']['type'])(self.optimizer,
                                                                                         config["lr_scheduler"]['args']['step_size'],
                                                                                         config['lr_scheduler']['args']['gamma'])
+        # self.lr_scheduler = getattr(utils.lr_scheduler, config['lr_scheduler']['type'])(self.optimizer,
+        #                                                                                 config["lr_scheduler"]['args'][
+        #                                                                                     'T-max'],
+        #                                                                                 config['lr_scheduler']['args'][
+        #                                                                                     'eta_min'])
 
         # MONITORING
         self.monitor = cfg_trainer.get('monitor', 'off')

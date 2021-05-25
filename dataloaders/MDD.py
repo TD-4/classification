@@ -3,48 +3,34 @@
 # @Date: 2021.4.14
 # @github:https://github.com/felixfu520
 
-# Originally written by Kazuto Nakashima
-# https://github.com/kazuto1011/deeplab-pytorch
-
 import numpy as np
 import os
 import cv2
-from itertools import chain
-from glob import glob
 
 from base import BaseDataSet, BaseDataLoader
 
 
-class MedMnistDataset(BaseDataSet):
+class MDDDataset(BaseDataSet):
     def __init__(self, **kwargs):
-        self.num_classes = 6
-        super(MedMnistDataset, self).__init__(**kwargs)
+        self.num_classes = 21
+        super(MDDDataset, self).__init__(**kwargs)
 
     def _set_files(self):
         """
         功能：获取所有文件的文件名和标签
         """
-        all_data_path, labels = [], []
-        image_folders = list(map(lambda x: self.root + "/" + x, os.listdir(self.root)))
-        all_images = list(map(lambda x: glob(x + "/*"), image_folders))
-        all_images = list(chain.from_iterable(all_images))
+        if self.val:
+            list_path = os.path.join(self.root, "testlist.txt")
+        else:
+            list_path = os.path.join(self.root, "trainlist.txt")
 
-        imageNameSet = set()
-        imageNameList = list()
-        for file in all_images:
-            label = os.path.dirname(file).split("/")[-1]
-            all_data_path.append(file)
-            if label not in imageNameSet:
-                imageNameSet.add(label)
-                imageNameList.append(label)
-            labels.append(imageNameList.index(label))
+        images, labels = [], []
+        with open(list_path, 'r', encoding='utf-8') as images_labels:
+            for image_label in images_labels:
+                images.append(image_label.split(",,,")[0])
+                labels.append(image_label.split(",,,")[1])
 
-        label_txt_path = os.path.split(os.path.realpath(__file__))[0]
-        label_txt_path = os.path.join(label_txt_path, "labels", "MedMnist_labels.txt")
-        with open(label_txt_path, "w") as f:
-            for i, name in enumerate(imageNameList):
-                f.write(str(i) + ":" + name + "\n")
-        self.files = list(zip(all_data_path, labels))
+        self.files = list(zip(images, labels))
 
     def _load_data(self, index):
         """
@@ -61,17 +47,17 @@ class MedMnistDataset(BaseDataSet):
         return img, label
 
 
-class MedMnist(BaseDataLoader):
+class MDD(BaseDataLoader):
     def __init__(self, data_dir,
                  base_size=None, crop_size=None, augment=False, scale=True, flip=False, rotate=False, blur=False, histogram=False,
-                 batch_size=1, num_workers=1, shuffle=False,
+                 batch_size=1, num_workers=1, shuffle=True,
                  in_channels=3, val=False):
         if in_channels == 3:
             self.MEAN = [0.45734706, 0.43338275, 0.40058118]
             self.STD = [0.23965294, 0.23532275, 0.2398498]
         else:
-            self.MEAN = [0.45734706]
-            self.STD = [0.23965294]
+            self.MEAN = [0.39755441968379984]
+            self.STD = [0.09066523780114362]
         kwargs = {
             'root': data_dir,
 
@@ -91,7 +77,7 @@ class MedMnist(BaseDataLoader):
             'val': val
         }
 
-        self.dataset = MedMnistDataset(**kwargs)
-        super(MedMnist, self).__init__(self.dataset, batch_size, shuffle, num_workers)
+        self.dataset = MDDDataset(**kwargs)
+        super(MDD, self).__init__(self.dataset, batch_size, shuffle, num_workers)
 
 
