@@ -16,10 +16,10 @@ if __name__ == "__main__":
 
     # exporter settings
     parser = argparse.ArgumentParser()
-    parser.add_argument('-c', '--configs', default='../../saved/OLED-Resnet18/04-28_09-02/configs.json', type=str,
+    parser.add_argument('-c', '--configs', default='/home/felixfu/cds/classification/saved/BDD-Resnet18/05-26_09-14/configs.json', type=str,
                         help='Path to the configs file (default: configs.json)')
-    parser.add_argument('--model', type=str, default='../../saved/OLED-Resnet18/04-28_09-02/best_model.pth', help="set model checkpoint path")
-    parser.add_argument('--model_out', type=str, default='oled_resnet18.onnx')
+    parser.add_argument('--model', type=str, default='/home/felixfu/cds/classification/saved/BDD-Resnet18/05-26_09-14/best_model.pth', help="set model checkpoint path")
+    parser.add_argument('--model_out', type=str, default='bdd_resnet18.onnx')
     parser.add_argument('--image', type=str, default="", help='input image to use')
 
     args = parser.parse_args()
@@ -44,7 +44,7 @@ if __name__ == "__main__":
 
     # ----------------------------load the model
     import models
-    num_classes = 11
+    num_classes = 29
     config = json.load(open(args.configs))
     model = get_instance(models, 'arch', config, num_classes).to(device)  # 定义模型
 
