@@ -45,7 +45,7 @@
         "type": "Resnet18",
         "args": {
             "in_channels": 1,
-            "pretrained": false,
+            "pretrained": true,
             "freeze_bn": false
         }
     },
