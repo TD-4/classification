@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="tensorrt_cpp"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;CMake Files\classifier\;CMake Files\..\;CMake Files\..\..\;CMake Files\..\..\usr\;CMake Files\..\..\usr\local\;CMake Files\..\..\usr\local\lib\;CMake Files\..\..\usr\local\lib\cmake\;CMake Files\..\..\usr\local\lib\cmake\opencv4\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="/tmp/tmp.1vxzH1v9Hh/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j12 -f &quot;/tmp/tmp.1vxzH1v9Hh/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -j12 -f &quot;/tmp/tmp.1vxzH1v9Hh/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j12 -f &quot;/tmp/tmp.1vxzH1v9Hh/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j12 -f &quot;/tmp/tmp.1vxzH1v9Hh/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="/tmp/tmp.1vxzH1v9Hh/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j12 -f &quot;/tmp/tmp.1vxzH1v9Hh/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/make -j12 -f &quot;/tmp/tmp.1vxzH1v9Hh/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j12 -f &quot;/tmp/tmp.1vxzH1v9Hh/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j12 -f &quot;/tmp/tmp.1vxzH1v9Hh/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="tensorrt_cpp">
+				<Option output="/tmp/tmp.1vxzH1v9Hh/cmake-build-debug/tensorrt_cpp" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/tmp/tmp.1vxzH1v9Hh/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/tmp/tmp.1vxzH1v9Hh/classifier"/>
+					<Add directory="/usr/local/include/opencv4"/>
+					<Add directory="/usr/include/c++/7"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/7"/>
+					<Add directory="/usr/include/c++/7/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/7/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j12 -f &quot;/tmp/tmp.1vxzH1v9Hh/cmake-build-debug/Makefile&quot;  VERBOSE=1 tensorrt_cpp"/>
+					<CompileFile command="/usr/bin/make -j12 -f &quot;/tmp/tmp.1vxzH1v9Hh/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j12 -f &quot;/tmp/tmp.1vxzH1v9Hh/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j12 -f &quot;/tmp/tmp.1vxzH1v9Hh/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="tensorrt_cpp/fast">
+				<Option output="/tmp/tmp.1vxzH1v9Hh/cmake-build-debug/tensorrt_cpp" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/tmp/tmp.1vxzH1v9Hh/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/tmp/tmp.1vxzH1v9Hh/classifier"/>
+					<Add directory="/usr/local/include/opencv4"/>
+					<Add directory="/usr/include/c++/7"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/7"/>
+					<Add directory="/usr/include/c++/7/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/7/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j12 -f &quot;/tmp/tmp.1vxzH1v9Hh/cmake-build-debug/Makefile&quot;  VERBOSE=1 tensorrt_cpp/fast"/>
+					<CompileFile command="/usr/bin/make -j12 -f &quot;/tmp/tmp.1vxzH1v9Hh/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j12 -f &quot;/tmp/tmp.1vxzH1v9Hh/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j12 -f &quot;/tmp/tmp.1vxzH1v9Hh/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="/tmp/tmp.1vxzH1v9Hh/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j12 -f &quot;/tmp/tmp.1vxzH1v9Hh/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/make -j12 -f &quot;/tmp/tmp.1vxzH1v9Hh/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j12 -f &quot;/tmp/tmp.1vxzH1v9Hh/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j12 -f &quot;/tmp/tmp.1vxzH1v9Hh/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="trt">
+				<Option output="/tmp/tmp.1vxzH1v9Hh/cmake-build-debug/classifier/libtrt.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/tmp/tmp.1vxzH1v9Hh/cmake-build-debug/classifier"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/local/lib"/>
+					<Add directory="/usr/local/cuda/include"/>
+					<Add directory="/usr/local/TensorRT/TensorRT-7.2.2.3/samples/common"/>
+					<Add directory="/usr/local/TensorRT/TensorRT-7.2.2.3/include"/>
+					<Add directory="/usr/local/TensorRT/TensorRT-7.2.2.3/lib"/>
+					<Add directory="/usr/local/TensorRT/TensorRT-7.2.2.3/lib/stubs"/>
+					<Add directory="/usr/local/include/opencv4"/>
+					<Add directory="/usr/include/c++/7"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/7"/>
+					<Add directory="/usr/include/c++/7/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/7/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j12 -f &quot;/tmp/tmp.1vxzH1v9Hh/cmake-build-debug/classifier/Makefile&quot;  VERBOSE=1 trt"/>
+					<CompileFile command="/usr/bin/make -j12 -f &quot;/tmp/tmp.1vxzH1v9Hh/cmake-build-debug/classifier/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j12 -f &quot;/tmp/tmp.1vxzH1v9Hh/cmake-build-debug/classifier/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j12 -f &quot;/tmp/tmp.1vxzH1v9Hh/cmake-build-debug/classifier/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="trt/fast">
+				<Option output="/tmp/tmp.1vxzH1v9Hh/cmake-build-debug/classifier/libtrt.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/tmp/tmp.1vxzH1v9Hh/cmake-build-debug/classifier"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/local/lib"/>
+					<Add directory="/usr/local/cuda/include"/>
+					<Add directory="/usr/local/TensorRT/TensorRT-7.2.2.3/samples/common"/>
+					<Add directory="/usr/local/TensorRT/TensorRT-7.2.2.3/include"/>
+					<Add directory="/usr/local/TensorRT/TensorRT-7.2.2.3/lib"/>
+					<Add directory="/usr/local/TensorRT/TensorRT-7.2.2.3/lib/stubs"/>
+					<Add directory="/usr/local/include/opencv4"/>
+					<Add directory="/usr/include/c++/7"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/7"/>
+					<Add directory="/usr/include/c++/7/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/7/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j12 -f &quot;/tmp/tmp.1vxzH1v9Hh/cmake-build-debug/classifier/Makefile&quot;  VERBOSE=1 trt/fast"/>
+					<CompileFile command="/usr/bin/make -j12 -f &quot;/tmp/tmp.1vxzH1v9Hh/cmake-build-debug/classifier/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j12 -f &quot;/tmp/tmp.1vxzH1v9Hh/cmake-build-debug/classifier/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j12 -f &quot;/tmp/tmp.1vxzH1v9Hh/cmake-build-debug/classifier/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="/tmp/tmp.1vxzH1v9Hh/classifier/classification.cpp">
+			<Option target="trt"/>
+		</Unit>
+		<Unit filename="/tmp/tmp.1vxzH1v9Hh/classifier/classification.h">
+			<Option target="trt"/>
+		</Unit>
+		<Unit filename="/tmp/tmp.1vxzH1v9Hh/classifier/gpu_allocator.cpp">
+			<Option target="trt"/>
+		</Unit>
+		<Unit filename="/tmp/tmp.1vxzH1v9Hh/classifier/gpu_allocator.h">
+			<Option target="trt"/>
+		</Unit>
+		<Unit filename="/tmp/tmp.1vxzH1v9Hh/main.cpp">
+			<Option target="tensorrt_cpp"/>
+		</Unit>
+		<Unit filename="/tmp/tmp.1vxzH1v9Hh/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+		<Unit filename="/tmp/tmp.1vxzH1v9Hh/classifier/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\classifier\"/>
+		</Unit>
+		<Unit filename="/tmp/tmp.1vxzH1v9Hh/../../usr/local/lib/cmake/opencv4/OpenCVConfig-version.cmake">
+			<Option virtualFolder="CMake Files\..\..\usr\local\lib\cmake\opencv4\"/>
+		</Unit>
+		<Unit filename="/tmp/tmp.1vxzH1v9Hh/../../usr/local/lib/cmake/opencv4/OpenCVConfig.cmake">
+			<Option virtualFolder="CMake Files\..\..\usr\local\lib\cmake\opencv4\"/>
+		</Unit>
+		<Unit filename="/tmp/tmp.1vxzH1v9Hh/../../usr/local/lib/cmake/opencv4/OpenCVModules-release.cmake">
+			<Option virtualFolder="CMake Files\..\..\usr\local\lib\cmake\opencv4\"/>
+		</Unit>
+		<Unit filename="/tmp/tmp.1vxzH1v9Hh/../../usr/local/lib/cmake/opencv4/OpenCVModules.cmake">
+			<Option virtualFolder="CMake Files\..\..\usr\local\lib\cmake\opencv4\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>

@@ -1,0 +1,2 @@
+/usr/bin/ar qc libtrt.a  CMakeFiles/trt.dir/classification.cpp.o CMakeFiles/trt.dir/gpu_allocator.cpp.o
+/usr/bin/ranlib libtrt.a

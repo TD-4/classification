@@ -62,11 +62,11 @@ def main():
     config = json.load(open(args.configs))
 
     # Dataset used for training the model
-    MEAN = [0.45734706]
-    STD = [0.23965294]
+    MEAN = [0.39755441968379984]
+    STD = [0.09066523780114362]
     to_tensor = transforms.ToTensor()
     normalize = transforms.Normalize(MEAN, STD)
-    num_classes = 11
+    num_classes = 21
 
     # Model
     model = getattr(models, config['arch']['type'])(num_classes, **config['arch']['args'])
@@ -107,7 +107,7 @@ def main():
             image = _val_augmentation(img_file)
             input = normalize(to_tensor(image)).unsqueeze(0)
 
-            prediction = model(input.to(device))    # tensor([[ 7.4939, -2.3476, -0.6207, -1.6629, -2.1027,  2.9507,  1.4629, -0.5033, -2.9737, -1.3985, -3.4913]], device='cuda:0')
+            prediction = model(input.to(device))    # tensor([[ 0.2192,  4.0262,  3.6749, -4.5733, -3.4395,  2.8925, -0.1124, -1.0738, 0.5113,  1.6412, -3.0319, -0.2845, -3.7119, -3.1958, -0.8727,  4.6714, -1.8859,  0.1417,  3.0535, -3.1263, -0.2776]], device='cuda:0')
             prediction = prediction.squeeze(0).cpu().numpy()
             prediction = F.softmax(torch.from_numpy(prediction), dim=0).argmax(0).cpu().numpy()
             result.append(prediction.item())
@@ -116,11 +116,11 @@ def main():
 
 def parse_arguments():
     parser = argparse.ArgumentParser(description='Inference')
-    parser.add_argument('-c', '--configs', default='saved/OLED-Resnet18/04-28_09-02/configs.json',type=str,
+    parser.add_argument('-c', '--configs', default='/home/felixfu/cds/classification/saved/MDD-Resnet18/05-25_15-09/configs.json',type=str,
                         help='The configs used to train the model')
-    parser.add_argument('-m', '--model', default='saved/OLED-Resnet18/04-28_09-02/best_model.pth', type=str,
+    parser.add_argument('-m', '--model', default='/home/felixfu/cds/classification/saved/MDD-Resnet18/05-25_15-09/best_model.pth', type=str,
                         help='Path to the .pth model checkpoint to be used in the prediction')
-    parser.add_argument('-i', '--images', default="images/oled_one", type=str,
+    parser.add_argument('-i', '--images', default="test", type=str,
                         help='Path to the images to be segmented')
     parser.add_argument('-o', '--output', default='outputs', type=str,  
                         help='Output Path')
