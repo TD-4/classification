@@ -99,9 +99,10 @@ if __name__ == '__main__':
     config = json.load(open(args.configs))
     if args.resume:
         print("resume config......")
-        config = torch.load(args.resume)['configs']
-        config["train_loader"]["args"]["batch_size"] = 20
-        config["val_loader"]["args"]["batch_size"] = 20
+        if True:  # use pth config
+            config = torch.load(args.resume)['configs']
+            # config["train_loader"]["args"]["batch_size"] = 20
+            # config["val_loader"]["args"]["batch_size"] = 20
     if args.device:
         os.environ["CUDA_VISIBLE_DEVICES"] = args.device
     
