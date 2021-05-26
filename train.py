@@ -66,7 +66,7 @@ def main(config, resume):
     # MODEL
     model = get_instance(models, 'arch', config, train_loader.dataset.num_classes)
     print(f'\n{model}\n')
-    summary(model, (1, 150, 150), device="cpu")
+    summary(model, (1, 224, 224), device="cpu")
 
     # LOSS
     weight = torch.from_numpy(np.array(config['weight'])).float()
@@ -89,7 +89,7 @@ def main(config, resume):
 if __name__ == '__main__':
     # PARSE THE ARGS
     parser = argparse.ArgumentParser(description='PyTorch Training')
-    parser.add_argument('-c', '--configs', default='configs/MDD_AlexNetx_CEL_SGD.json', type=str,
+    parser.add_argument('-c', '--configs', default='configs/MDD_AlexNet_CEL_SGD.json', type=str,
                         help='Path to the configs file (default: configs.json)')
     parser.add_argument('-r', '--resume', default="", type=str,
                         help='Path to the .pth model checkpoint to resume training')

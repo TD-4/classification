@@ -8,4 +8,4 @@ from .densenet import Densenet161
 
 from .inceptions import inception_v3_
 
-from .layer6 import AlexNet_
+from .layer6 import AlexNet_, _AlexNet
