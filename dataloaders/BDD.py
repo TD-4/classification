@@ -66,8 +66,8 @@ class BDD(BaseDataLoader):
             self.MEAN = [0.45734706, 0.43338275, 0.40058118]
             self.STD = [0.23965294, 0.23532275, 0.2398498]
         else:
-            self.MEAN = [0.45734706]
-            self.STD = [0.23965294]
+            self.MEAN = [0.3858034032292721]
+            self.STD = [0.12712721340420535]
         kwargs = {
             'root': data_dir,
 

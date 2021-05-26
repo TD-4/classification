@@ -7,6 +7,9 @@ from glob import glob
 
 
 def get_labels(root_path="/home/felixfu/data/classification/BDD"):
+    """
+    获取labels.txt
+    """
     folders = os.listdir(root_path)
     folders = [f[:-5] for f in folders if re.search("train", f)]
     with open(os.path.join(root_path, "labels.txt"), 'w') as f:
@@ -15,6 +18,9 @@ def get_labels(root_path="/home/felixfu/data/classification/BDD"):
 
 
 def gen_txt(root_path="/home/felixfu/data/classification/BDD"):
+    """
+    获得trainlist.txt & testlist.txt
+    """
     # 获取所有图片
     image_folders = list(map(lambda x: root_path + "/" + x, os.listdir(root_path)))
     all_images = list(map(lambda x: glob(x + "/*"), image_folders))
@@ -26,7 +32,6 @@ def gen_txt(root_path="/home/felixfu/data/classification/BDD"):
     with open(os.path.join(root_path, "labels.txt")) as file:
         for line in file:
             labels[line.split()[0]] = line.split()[1]
-
 
     train_images, test_images, train_labels, test_labels = [], [], [], []
     for file in all_images:
@@ -44,7 +49,6 @@ def gen_txt(root_path="/home/felixfu/data/classification/BDD"):
             test_images.append(file)
             test_labels.append(labels[label_name])
 
-
     trainlist = os.path.join(root_path, "trainlist.txt")
     with open(trainlist, "w", encoding='utf-8') as f:
         for img_path, label in zip(train_images, train_labels):
@@ -56,6 +60,33 @@ def gen_txt(root_path="/home/felixfu/data/classification/BDD"):
             f.write(str(img_path) + ",,," + label + "\n")
 
 
+def gen_mean_std(root_path="/home/felixfu/data/classification/BDD"):
+    """
+    获得mean & std
+    """
+    gray_channel = 0
+    count = 0
+    with open(os.path.join(root_path, "trainlist.txt")) as file:
+        for line in file:
+            img = cv2.imread(line.split(",,,")[0], cv2.IMREAD_GRAYSCALE) / 255.0
+            gray_channel += np.sum(img)
+            count += 1
+    gray_channel_mean = gray_channel / (count * 150 * 150)
+
+    gray_channel = 0
+    count = 0
+    with open(os.path.join(root_path, "trainlist.txt")) as file:
+        for line in file:
+            img = cv2.imread(line.split(",,,")[0], cv2.IMREAD_GRAYSCALE) / 255.0
+            gray_channel = gray_channel + np.sum((img - gray_channel_mean)**2)
+            count += 1
+    gray_channel_std = np.sqrt(gray_channel / (count * 150 * 150))
+
+    print("mean:", gray_channel_mean)
+    print("std:", gray_channel_std)
+
+
 if __name__ == "__main__":
     # get_labels()
-    gen_txt()
+    # gen_txt()
+    gen_mean_std()
