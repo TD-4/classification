@@ -1,0 +1,95 @@
+{
+    "name": "MDD-Alexnet",
+    "n_gpu": 1,
+    "use_synch_bn": false,
+
+    "train_loader": {
+        "type": "MDD",
+        "args":{
+            "data_dir": "/home/felixfu/data/classification/MDD",
+
+            "base_size": 224,
+            "crop_size": 224,
+            "augment": true,
+            "scale": true,
+            "flip": false,
+            "rotate": false,
+            "blur": false,
+            "histogram": true,
+
+            "num_workers": 8,
+            "batch_size": 60,
+            "shuffle": true,
+
+            "in_channels": 1
+        }
+    },
+
+    "val_loader": {
+        "type": "MDD",
+        "args":{
+            "data_dir": "/home/felixfu/data/classification/MDD",
+
+            "crop_size": 224,
+            "histogram": true,
+
+            "batch_size": 60,
+            "num_workers": 4,
+            "in_channels": 1,
+
+            "val": true
+        }
+    },
+
+    "arch": {
+        "type": "_AlexNet",
+        "args": {
+            "in_channels": 1,
+            "pretrained": true,
+            "freeze_bn": false
+        }
+    },
+
+
+    "loss": "CrossEntropyLoss2d",
+    "ignore_index": 255,
+    "weight": [
+        1,1,1,1,1,
+        1,1,1,1,1,
+        1,1,1,1,1,
+        1,1,1,1,1,
+        1],
+
+    "optimizer": {
+        "type": "SGD",
+        "differential_lr": false,
+        "args":{
+            "lr": 0.001,
+            "weight_decay": 1e-4,
+            "momentum": 0.9
+        }
+    },
+    "lr_scheduler": {
+        "type": "StepLR_",
+        "args": {
+            "step_size": 20,
+            "gamma": 0.5
+        }
+    },
+
+    "trainer": {
+        "epochs": 200,
+        "save_dir": "saved/",
+        "save_period": 1,
+  
+        "monitor": "max top1",
+        "early_stop": 50,
+        
+        "tensorboard": true,
+        "log_dir": "saved/runs",
+        "log_per_iter": 20,
+
+        "val": true,
+        "val_per_epochs": 1
+    }
+}
