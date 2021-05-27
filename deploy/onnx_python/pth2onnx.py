@@ -16,10 +16,10 @@ if __name__ == "__main__":
 
     # exporter settings
     parser = argparse.ArgumentParser()
-    parser.add_argument('-c', '--configs', default='/home/felixfu/cds/classification/saved/MDD-Resnet18/05-25_15-09/configs.json', type=str,
+    parser.add_argument('-c', '--configs', default='/home/felixfu/cds/classification/saved/MDD-Resnet34/05-27_09-14/configs.json', type=str,
                         help='Path to the configs file (default: configs.json)')
-    parser.add_argument('--model', type=str, default='/home/felixfu/cds/classification/saved/MDD-Resnet18/05-25_15-09/best_model.pth', help="set model checkpoint path")
-    parser.add_argument('--model_out', type=str, default='mdd_resnet18.onnx')
+    parser.add_argument('--model', type=str, default='/home/felixfu/cds/classification/saved/MDD-Resnet34/05-27_09-14/best_model.pth', help="set model checkpoint path")
+    parser.add_argument('--model_out', type=str, default='mdd_resnet34.onnx')
     parser.add_argument('--image', type=str, default="", help='input image to use')
 
     args = parser.parse_args()

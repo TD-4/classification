@@ -10,11 +10,11 @@ int main() {
     if (task_type == "Classification") {
         std::cout << "Classification" << std::endl;
 
-        cv::Mat img = cv::imread("/root/cds/classification/deploy/tensorrt_cpp/oled_one/1.bmp",cv::IMREAD_GRAYSCALE);
-        std::string onnxModel = "/root/cds/classification/deploy/tensorrt_cpp/b1_resnet18.onnx";
+        cv::Mat img = cv::imread("/root/cds/classification/deploy/tensorrt_cpp/blackline.bmp",cv::IMREAD_GRAYSCALE);
+        std::string onnxModel = "/root/cds/classification/deploy/tensorrt_cpp/mdd_densenet121.onnx";
         //std::string label = "D:\\Test_TRT\\classification\\VT2_LABEL.txt";
         std::string label = "";
-        std::string engine = "/root/cds/classification/deploy/tensorrt_cpp/b1_resnet18.trt";
+        std::string engine = "/root/cds/classification/deploy/tensorrt_cpp/mdd_densenet121.engine";
         std::shared_ptr<ClassificationTensorRT::classifier_ctx> ctx;
 
         int time1, time2;
@@ -31,8 +31,8 @@ int main() {
 
         cv::resize(img, img, cv::Size(224,224));
         img.convertTo(img, CV_32FC1, 1.0 / 255, 0);
-        std::vector<float> mean_value{ 0.45734706 };
-        std::vector<float> std_value{ 0.23965294 };
+        std::vector<float> mean_value{ 0.39755441968379984 };
+        std::vector<float> std_value{ 0.09066523780114362 };
         img.convertTo(img, CV_32FC1, 1.0 / std_value[0], (0.0 - mean_value[0]) / std_value[0]);
 
 
