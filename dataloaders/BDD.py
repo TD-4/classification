@@ -16,37 +16,25 @@ class BDDDataset(BaseDataSet):
         super(BDDDataset, self).__init__(**kwargs)
 
     def _set_files(self):
-        """
-        功能：获取所有文件的文件名和标签
+        """获取所有文件的文件名和标签
         """
         if self.val:
             list_path = os.path.join(self.root, "testlist.txt")
         else:
             list_path = os.path.join(self.root, "trainlist.txt")
 
-        labels_txt = os.path.join(self.root, "labels.txt")
-        middle_filname = {}
-        with open(labels_txt, 'r') as middle_path:
-            for path in middle_path:
-                middle_filname[path.split()[1]] = path.split()[0]
-
         images, labels = [], []
         with open(list_path, 'r', encoding='utf-8') as images_labels:
             for image_label in images_labels:
-                if self.val:
-                    images.append(image_label.split(",,,")[0])
-                else:
-                    images.append(image_label.split(",,,")[0])
-
+                images.append(image_label.split(",,,")[0])
                 labels.append(image_label.split(",,,")[1])
 
         self.files = list(zip(images, labels))
 
     def _load_data(self, index):
-        """
-        功能：通过文件名获得，图片和类别
+        """通过文件名获得，图片和类别
         :param index:
-        :return:
+        :return: ndarray
         """
         image_path, label = self.files[index]
         if self.in_channels == 1:
@@ -63,11 +51,11 @@ class BDD(BaseDataLoader):
                  batch_size=1, num_workers=1, shuffle=False,
                  in_channels=3, val=False):
         if in_channels == 3:
-            self.MEAN = [0.45734706, 0.43338275, 0.40058118]
+            self.MEAN = [0.45734706, 0.43338275, 0.40058118]    # mean & std在不同数据集上要不同，每个数据集算一次，不能复用
             self.STD = [0.23965294, 0.23532275, 0.2398498]
         else:
-            self.MEAN = [0.45734706]
-            self.STD = [0.23965294]
+            self.MEAN = [0.3858034032292721]
+            self.STD = [0.12712721340420535]
         kwargs = {
             'root': data_dir,
 
