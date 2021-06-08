@@ -1,6 +1,0 @@
-0:Hand
-1:BreastMRI
-2:ChestCT
-3:HeadCT
-4:AbdomenCT
-5:CXR
