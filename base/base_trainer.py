@@ -25,6 +25,22 @@ def get_instance(module, name, config, *args):
 
 class BaseTrainer:
     def __init__(self, model, loss, resume, config, train_loader, val_loader=None, train_logger=None):
+        """ 训练基类
+        __init__:
+            1、SETTING THE DEVICE，设置设备
+            2、CONFIGS，简单配置
+            3、OPTIMIZER，优化器
+            4、MONITORING，监控最优，是否early stop
+            5、CHECKPOINTS & TENSOBOARD，
+            6、resume
+
+        Train:
+            1、Train one epoch
+            2、Val one epoch
+            3、CHECKING IF THIS IS THE BEST MODEL (ONLY FOR VAL)
+            4、SAVE CHECKPOINT
+
+        """
         self.model = model
         self.loss = loss
         self.config = config
@@ -114,10 +130,12 @@ class BaseTrainer:
         return device, available_gpus
     
     def train(self):
-        print("Starting Train")
-        for epoch in range(self.start_epoch, self.epochs+ self.start_epoch):
-            # RUN TRAIN (AND VAL)
+        print("Starting Train(function from base_trainer.py)")
+        for epoch in range(self.start_epoch, self.epochs + self.start_epoch):
+            # Train one epoch
             results = self._train_epoch(epoch)
+
+            # Val one epoch
             if self.do_validation and epoch % self.config['trainer']['val_per_epochs'] == 0:
                 results = self._valid_epoch(epoch)
 
@@ -125,9 +143,10 @@ class BaseTrainer:
                 self.logger.info(f'\n         ## Info for epoch {epoch} ## ')
                 for k, v in results.items():
                     self.logger.info(f'         {str(k):15s}: {v}')
-            
+
+            # log
             if self.train_logger is not None:
-                log = {'epoch' : epoch, **results}
+                log = {'epoch': epoch, **results}
                 self.train_logger.add_entry(log)
 
             # CHECKING IF THIS IS THE BEST MODEL (ONLY FOR VAL)
@@ -166,6 +185,10 @@ class BaseTrainer:
         filename = os.path.join(self.checkpoint_dir, f'checkpoint-epoch{epoch}.pth')
         self.logger.info(f'\nSaving a checkpoint: {filename} ...') 
         torch.save(state, filename)
+        # 如果val_per_epochs=1的话，删除上一个epoch保存的pth
+        if self.config['trainer']['val_per_epochs'] == 1 and epoch > 1:
+            del_filename = os.path.join(self.checkpoint_dir, f'checkpoint-epoch{epoch-1}.pth')
+            os.remove(del_filename)
 
         if save_best:
             filename = os.path.join(self.checkpoint_dir, f'best_model.pth')

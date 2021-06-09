@@ -182,7 +182,7 @@ class BaseDataSet(Dataset):
         return len(self.files)
 
     def __getitem__(self, index):
-        image, label = self._load_data(index)  # goto 子类实现。return （ndarray，int）
+        image, label, image_path = self._load_data(index)  # goto 子类实现。return （ndarray，int）
         if self.val:    # 验证集
             image, label = self._val_augmentation(image, label)
         else:  # 训练集
@@ -190,7 +190,7 @@ class BaseDataSet(Dataset):
 
         label = torch.from_numpy(np.array(label, dtype=np.int32)).long()
         image = Image.fromarray(np.uint8(image))
-        return self.normalize(self.to_tensor(image)), label
+        return self.normalize(self.to_tensor(image)), label, image_path
 
     def __repr__(self):
         fmt_str = "Dataset: " + self.__class__.__name__ + "\n"

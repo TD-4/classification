@@ -37,28 +37,28 @@ def main(config, resume):
     # DATA LOADERS
     train_loader = get_instance(dataloaders, 'train_loader', config)
     # # Test train_loader
-    # for data, target in train_loader:
+    # for data, target, image_path in train_loader:
     #     # 使用matplotlib测试
-    #     MEAN = [0.45734706]
-    #     STD = [0.23965294]
+    #     MEAN = [0.3858034032292721]
+    #     STD = [0.12712721340420535]
     #     restore_transform = transforms.Compose([local_transforms.DeNormalize(MEAN, STD), transforms.ToPILImage()])
     #     image = restore_transform(data[0])
     #     plt.imshow(image, cmap="gray")
-    #     plt.text(226, 1, str(target.numpy()[0]))
+    #     plt.text(156, 1, str(target.numpy()[0]))
     #     plt.show()
     #     # print(target.numpy()[0])   # , cmap="gray"
     #     # print("Finshed")
 
     val_loader = get_instance(dataloaders, 'val_loader', config)
     # # Test val_loader
-    # for data, target in val_loader:
+    # for data, target, image_path in val_loader:
     #     # 使用matplotlib测试
-    #     MEAN = [0.45734706]
-    #     STD = [0.23965294]
+    #     MEAN = [0.3858034032292721]
+    #     STD = [0.12712721340420535]
     #     restore_transform = transforms.Compose([local_transforms.DeNormalize(MEAN, STD), transforms.ToPILImage()])
     #     image = restore_transform(data[0])
     #     plt.imshow(image, cmap="gray")
-    #     plt.text(226, 1, str(target.numpy()[0]))
+    #     plt.text(156, 1, str(target.numpy()[0]))
     #     # plt.show()
     #     # print(target.numpy()[0])   # , cmap="gray"
     #     # print("Finshed")
@@ -66,7 +66,7 @@ def main(config, resume):
     # MODEL
     model = get_instance(models, 'arch', config, train_loader.dataset.num_classes)
     print(f'\n{model}\n')
-    summary(model, (1, 224, 224), device="cpu")
+    summary(model, (1, 150, 150), device="cpu")
 
     # LOSS
     weight = torch.from_numpy(np.array(config['weight'])).float()
@@ -87,8 +87,8 @@ def main(config, resume):
 
 if __name__ == '__main__':
     # PARSE THE ARGS
-    parser = argparse.ArgumentParser(description='PyTorch Training')
-    parser.add_argument('-c', '--configs', default='configs/BDD_Densenet121_CEL_SGD_lr.json', type=str,
+    parser = argparse.ArgumentParser(description='LCD Classification Training')
+    parser.add_argument('-c', '--configs', default='configs/BDD_ResNet34_CEL_SGD.json', type=str,
                         help='Path to the configs file (default: configs.json)')
     parser.add_argument('-r', '--resume', default=None, type=str,
                         help='Path to the .pth model checkpoint to resume training')
@@ -97,7 +97,7 @@ if __name__ == '__main__':
 
     config = json.load(open(args.configs))
     if args.resume:
-        print("resume config......")
+        print("Resume config......")
         config = torch.load(args.resume)['configs']
     if args.device:
         os.environ["CUDA_VISIBLE_DEVICES"] = args.device

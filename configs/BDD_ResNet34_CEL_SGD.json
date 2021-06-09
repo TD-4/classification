@@ -6,19 +6,20 @@
     "train_loader": {
         "type": "BDD",
         "args":{
-            "data_dir": "/home/felixfu/data/classification/BDD",
+            "data_dir": "data/classification/BDD",
 
-            "base_size": 256,
-            "crop_size": 224,
-            "augment": true,
-            "scale": true,
+            "base_size": 150,
+            "crop_size": 150,
+            "scale": false,
+
+            "augment": false,
             "flip": false,
             "rotate": false,
             "blur": false,
-            "histogram": true,
+            "histogram": false,
 
             "num_workers": 8,
-            "batch_size": 160,
+            "batch_size": 60,
             "shuffle": true,
 
             "in_channels": 1
@@ -28,13 +29,13 @@
     "val_loader": {
         "type": "BDD",
         "args":{
-            "data_dir": "/home/felixfu/data/classification/BDD",
+            "data_dir": "data/classification/BDD",
 
-            "crop_size": 224,
-            "histogram": true,
+            "crop_size": 150,
+            "histogram": false,
 
-            "batch_size": 160,
-            "num_workers": 4,
+            "batch_size": 60,
+            "num_workers": 8,
             "in_channels": 1,
 
             "val": true
@@ -45,7 +46,7 @@
         "type": "Resnet34",
         "args": {
             "in_channels": 1,
-            "pretrained": false,
+            "pretrained": true,
             "freeze_bn": false
         }
     },
@@ -53,12 +54,20 @@
 
     "loss": "CrossEntropyLoss2d",
     "ignore_index": 255,
+    "weight": [
+        1,1,1,1,1,
+        1,1,1,1,1,
+        1,1,1,1,1,
+        1,1,1,1,1,
+        1,1,1,1,1,
+        1,1,1,1
+    ],
 
     "optimizer": {
         "type": "SGD",
         "differential_lr": false,
         "args":{
-            "lr": 0.01,
+            "lr": 0.001,
             "weight_decay": 1e-4,
             "momentum": 0.9
         }
@@ -66,7 +75,7 @@
     "lr_scheduler": {
         "type": "StepLR_",
         "args": {
-            "step_size": 10,
+            "step_size": 30,
             "gamma": 0.5
         }
     },
@@ -77,7 +86,7 @@
         "save_period": 1,
   
         "monitor": "max top1",
-        "early_stop": 10,
+        "early_stop": 30,
         
         "tensorboard": true,
         "log_dir": "saved/runs",

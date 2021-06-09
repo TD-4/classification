@@ -6,7 +6,7 @@ from itertools import chain
 from glob import glob
 
 
-def get_labels(root_path="classification/BDD"):
+def get_labels(root_path="/root/data/classification/BDD"):
     """
     args:
         root_path:数据集的路径。此文件夹下有多个文件夹，每个文件夹里面有对应图片
@@ -26,7 +26,7 @@ def get_labels(root_path="classification/BDD"):
             f.write(str(name) + " "+ str(i) + "\n")
 
 
-def gen_txt(root_path="classification/BDD"):
+def gen_txt(root_path="/root/data/classification/BDD"):
     """
     args:
     root_path:数据集的路径。此文件夹下有多个文件夹，每个文件夹里面有对应图片
@@ -46,6 +46,7 @@ def gen_txt(root_path="classification/BDD"):
     all_images = list(chain.from_iterable(all_images))
     all_images = [f for f in all_images if re.search("bmp", f)]
 
+
     # 获取标签
     labels = {}
     with open(os.path.join(root_path, "labels.txt")) as file:
@@ -55,6 +56,7 @@ def gen_txt(root_path="classification/BDD"):
 
     train_images, test_images, train_labels, test_labels = [], [], [], []
     for file in all_images:
+        file = file.encode('utf8', errors='surrogateescape').decode('utf-8')    # 为解决乱码问题，如果无乱码可删除
         label_name = os.path.dirname(file).split("/")[-1]
         if re.search("train", label_name):
             label_name = label_name[:-5]
@@ -81,7 +83,7 @@ def gen_txt(root_path="classification/BDD"):
             f.write(str(img_path) + ",,," + label + "\n")
 
 
-def gen_mean_std(root_path="classification/BDD"):
+def gen_mean_std(root_path="/root/data/classification/BDD"):
     """
     获得mean & std
     """
@@ -109,5 +111,5 @@ def gen_mean_std(root_path="classification/BDD"):
 
 if __name__ == "__main__":
     # get_labels()  # 获取labels.txt
-    # gen_txt()   # 获取trainlist.txt和testlist.txt
-    gen_mean_std()
+    gen_txt()   # 获取trainlist.txt和testlist.txt
+    # gen_mean_std()

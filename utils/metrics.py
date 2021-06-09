@@ -66,5 +66,4 @@ def confusionMatrix(preds, labels, conf_matrix):
     preds = torch.argmax(preds, 1)
     for t, p in zip(labels, preds):
         conf_matrix[t][p] += 1
-    # print(conf_matrix)
     return conf_matrix

@@ -37,12 +37,13 @@ class BDDDataset(BaseDataSet):
         :return: ndarray
         """
         image_path, label = self.files[index]
+        # image_path = image_path.encode('utf8', errors='surrogateescape').decode('utf-8')
         if self.in_channels == 1:
             # 修改支持中文路径
-            img = cv2.imdecode(np.fromfile(image_path, dtype=np.uint8), cv2.IMREAD_GRAYSCALE)
+            img = cv2.imdecode(np.fromfile(image_path.encode('utf8'), dtype=np.uint8), cv2.IMREAD_GRAYSCALE)
         elif self.in_channels == 3:
-            img = cv2.imdecode(np.fromfile(image_path, dtype=np.uint8), cv2.IMREAD_COLOR)
-        return img, label
+            img = cv2.imdecode(np.fromfile(image_path.encode('utf8'), dtype=np.uint8), cv2.IMREAD_COLOR)
+        return img, label, image_path
 
 
 class BDD(BaseDataLoader):
