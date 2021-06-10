@@ -42,31 +42,19 @@ def main(config, resume):
     #     MEAN = [0.3858034032292721]
     #     STD = [0.12712721340420535]
     #     restore_transform = transforms.Compose([local_transforms.DeNormalize(MEAN, STD), transforms.ToPILImage()])
-    #     image = restore_transform(data[0])
-    #     plt.imshow(image, cmap="gray")
-    #     plt.text(156, 1, str(target.numpy()[0]))
-    #     plt.show()
-    #     # print(target.numpy()[0])   # , cmap="gray"
-    #     # print("Finshed")
+    #     for i, data_i in enumerate(data):
+    #         image = restore_transform(data_i)
+    #         plt.imshow(image, cmap="gray")
+    #         plt.text(156, 1, str(target.numpy()[i]))
+    #         plt.text(-100,-10, str(image_path[i]))
+    #         plt.show()
 
     val_loader = get_instance(dataloaders, 'val_loader', config)
-    # # Test val_loader
-    # for data, target, image_path in val_loader:
-    #     # 使用matplotlib测试
-    #     MEAN = [0.3858034032292721]
-    #     STD = [0.12712721340420535]
-    #     restore_transform = transforms.Compose([local_transforms.DeNormalize(MEAN, STD), transforms.ToPILImage()])
-    #     image = restore_transform(data[0])
-    #     plt.imshow(image, cmap="gray")
-    #     plt.text(156, 1, str(target.numpy()[0]))
-    #     # plt.show()
-    #     # print(target.numpy()[0])   # , cmap="gray"
-    #     # print("Finshed")
 
     # MODEL
     model = get_instance(models, 'arch', config, train_loader.dataset.num_classes)
     print(f'\n{model}\n')
-    summary(model, (1, 150, 150), device="cpu")
+    # summary(model, (1, 150, 150), device="cpu")
 
     # LOSS
     weight = torch.from_numpy(np.array(config['weight'])).float()

@@ -190,7 +190,8 @@ class BaseDataSet(Dataset):
 
         label = torch.from_numpy(np.array(label, dtype=np.int32)).long()
         image = Image.fromarray(np.uint8(image))
-        return self.normalize(self.to_tensor(image)), label, image_path
+        # return self.normalize(self.to_tensor(image)), label, image_path   # 有归一化
+        return self.to_tensor(image), label, image_path     # 无归一化
 
     def __repr__(self):
         fmt_str = "Dataset: " + self.__class__.__name__ + "\n"

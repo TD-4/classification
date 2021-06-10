@@ -1,0 +1,98 @@
+{
+    "name": "BDD-Densenet161",
+    "n_gpu": 1,
+    "use_synch_bn": false,
+
+    "train_loader": {
+        "type": "BDD",
+        "args":{
+            "data_dir": "data/classification/BDD",
+
+            "base_size": 150,
+            "crop_size": 150,
+            "scale": false,
+
+            "augment": true,
+            "flip": false,
+            "rotate": false,
+            "blur": false,
+            "histogram": true,
+
+            "num_workers": 8,
+            "batch_size": 60,
+            "shuffle": true,
+
+            "in_channels": 1
+        }
+    },
+
+    "val_loader": {
+        "type": "BDD",
+        "args":{
+            "data_dir": "data/classification/BDD",
+
+            "crop_size": 150,
+            "histogram": true,
+
+            "batch_size": 60,
+            "num_workers": 8,
+            "in_channels": 1,
+
+            "val": true
+        }
+    },
+
+    "arch": {
+        "type": "Densenet161",
+        "args": {
+            "in_channels": 1,
+            "pretrained": true,
+            "freeze_bn": false
+        }
+    },
+
+
+    "loss": "CrossEntropyLoss2d",
+    "ignore_index": 255,
+    "weight": [
+        1,1,1,1,1,
+        1,1,1,1,1,
+        1,1,1,1,1,
+        1,1,1,1,1,
+        1,1,1,1,1,
+        1,1,1,1
+    ],
+
+    "optimizer": {
+        "type": "SGD",
+        "differential_lr": false,
+        "args":{
+            "lr": 0.001,
+            "weight_decay": 1e-4,
+            "momentum": 0.9
+        }
+    },
+    "lr_scheduler": {
+        "type": "StepLR_",
+        "args": {
+            "step_size": 30,
+            "gamma": 0.5
+        }
+    },
+
+    "trainer": {
+        "epochs": 200,
+        "save_dir": "saved/",
+        "save_period": 1,
+  
+        "monitor": "max top1",
+        "early_stop": 40,
+        
+        "tensorboard": true,
+        "log_dir": "saved/runs",
+        "log_per_iter": 20,
+
+        "val": true,
+        "val_per_epochs": 1
+    }
+}

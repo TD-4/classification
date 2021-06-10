@@ -4,6 +4,7 @@ import cv2
 import re
 from itertools import chain
 from glob import glob
+import chardet
 
 
 def get_labels(root_path="/root/data/classification/BDD"):
@@ -60,14 +61,10 @@ def gen_txt(root_path="/root/data/classification/BDD"):
         label_name = os.path.dirname(file).split("/")[-1]
         if re.search("train", label_name):
             label_name = label_name[:-5]
-            # b = bytes(file, encoding='gbk')
-            # file2 = b.decode('utf-8')
             train_images.append(file)
             train_labels.append(labels[label_name])
         else:
             label_name = label_name[:-4]
-            # b = bytes(file, encoding='gbk')
-            # file2 = b.decode('utf-8')
             test_images.append(file)
             test_labels.append(labels[label_name])
 
@@ -83,24 +80,37 @@ def gen_txt(root_path="/root/data/classification/BDD"):
             f.write(str(img_path) + ",,," + label + "\n")
 
 
+def histogram(image):
+    rows, cols = image.shape
+    flat_gray = image.reshape((cols * rows,)).tolist()
+    A = min(flat_gray)
+    B = max(flat_gray)
+    image = np.uint8(255 / (B - A + 0.1) * (image - A) + 0.5)
+    return image
+
+
 def gen_mean_std(root_path="/root/data/classification/BDD"):
     """
     获得mean & std
     """
     gray_channel = 0
     count = 0
-    with open(os.path.join(root_path, "trainlist.txt")) as file:
+    with open(os.path.join(root_path, "trainlist.txt"), encoding='utf-8') as file:
         for line in file:
-            img = cv2.imread(line.split(",,,")[0], cv2.IMREAD_GRAYSCALE) / 255.0
+            img = cv2.imdecode(np.fromfile(line.split(",,,")[0].encode('utf8'), dtype=np.uint8), cv2.IMREAD_GRAYSCALE)
+            img = histogram(img) / 255.0    # 先直方图拉伸，再求mean和std
+            img = img / 255.0
             gray_channel += np.sum(img)
             count += 1
     gray_channel_mean = gray_channel / (count * 150 * 150)
 
     gray_channel = 0
     count = 0
-    with open(os.path.join(root_path, "trainlist.txt")) as file:
+    with open(os.path.join(root_path, "trainlist.txt"), encoding='utf-8') as file:
         for line in file:
-            img = cv2.imread(line.split(",,,")[0], cv2.IMREAD_GRAYSCALE) / 255.0
+            img = cv2.imdecode(np.fromfile(line.split(",,,")[0].encode('utf8'), dtype=np.uint8), cv2.IMREAD_GRAYSCALE)
+            # img = histogram(img) / 255.0  # 先直方图拉伸，再求mean和std
+            img = img / 255.0
             gray_channel = gray_channel + np.sum((img - gray_channel_mean)**2)
             count += 1
     gray_channel_std = np.sqrt(gray_channel / (count * 150 * 150))
@@ -111,5 +121,5 @@ def gen_mean_std(root_path="/root/data/classification/BDD"):
 
 if __name__ == "__main__":
     # get_labels()  # 获取labels.txt
-    gen_txt()   # 获取trainlist.txt和testlist.txt
-    # gen_mean_std()
+    # gen_txt()   # 获取trainlist.txt和testlist.txt
+    gen_mean_std()
